@@ -7,6 +7,7 @@ import './bootstrap.min.css'
 import App from './App';
 import Main from './views/Main';
 import LeaderBoard from './views/Leaderboard';
+import Admin from './views/Admin';
 
 
 
@@ -16,6 +17,7 @@ const Router = Backbone.Router.extend({
     routes: {
       ''    : 'index',
       'leaderboard' : 'leaderboard',
+      'admin' : 'admin',
     },
     index: function() {
       render(
@@ -24,6 +26,13 @@ const Router = Backbone.Router.extend({
           </App>
         , content)
     },
+    admin: function() {
+      render(
+          <App id="admin">
+            <Admin />
+          </App>
+        , content)
+      },
     leaderboard: function() {
       render(
           <App id="leaderboard">
