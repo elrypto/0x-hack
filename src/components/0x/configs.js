@@ -1,5 +1,4 @@
 import { GANACHE_NETWORK_ID, KOVAN_NETWORK_ID, RINKEBY_NETWORK_ID, ROPSTEN_NETWORK_ID } from './constants';
-import { NetworkSpecificConfigs } from './types';
 
 export const TX_DEFAULTS = { gas: 400000 };
 export const MNEMONIC = 'concert load couple harbor equip island argue ramp clarify fence smart topic';
