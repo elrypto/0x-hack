@@ -1,138 +1,168 @@
-import React, { Component } from 'react';
-import {
-    assetDataUtils,
-    BigNumber,
-    ContractWrappers,
-    generatePseudoRandomSalt,
-    Order,
-    orderHashUtils,
-    signatureUtils,
-    ExchangeEvents,
-} from '0x.js';
+import { ContractWrappers, MetamaskSubprovider, RPCSubprovider, Web3ProviderEngine } from '0x.js';
+import { SignerSubprovider } from '@0x/subproviders';
 import { Web3Wrapper } from '@0x/web3-wrapper';
-import { NETWORK_CONFIGS, TX_DEFAULTS } from './0x/configs';
-import { DECIMALS, NULL_ADDRESS, ZERO } from './0x/constants';
-import { providerEngine } from './0x/provider_engine';
-import { getRandomFutureDateInSeconds } from './0x/utils';
+import { Content, Footer } from 'bloomer';
+import * as _ from 'lodash';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import { ToastProvider, withToastManager } from 'react-toast-notifications';
 
-import { contractAddresses } from './0x/contracts';
+import { Account } from './Account';
+//import { Faucet } from './components/faucet';
+//import { InstallMetamask } from './components/install_metamask';
+//import { Nav } from './components/nav';
+//import { Welcome } from './components/welcome';
+import { ZeroExActions } from './zeroex_actions';
+import { networkToRPCURI } from './0x/utils';
 
-class Backend extends Component {
+
+
+class Backend extends React.Component {
      
-    async doBuy() {
-        console.log('starting buy order...');
-        const contractWrappers = new ContractWrappers(providerEngine, {networkId: NETWORK_CONFIGS.networkId});
-        // Initialize the Web3Wrapper, this provides helper functions around fetching
-        // account information, balances, general contract logs
-        const web3Wrapper = new Web3Wrapper(providerEngine);
-        const [maker, taker] = await web3Wrapper.getAvailableAddressesAsync();
-        const zrxTokenAddress = contractAddresses.zrxToken;
-        const etherTokenAddress = contractAddresses.etherToken;
+    constructor(props){
+        super(props);
+        this.initializeWeb3Async();
+    }
 
-        console.log("accounts maker:" + maker + ", taker:" + taker);
-
-         // the amount the maker is selling of maker asset
-     const makerAssetAmount = Web3Wrapper.toBaseUnitAmount(new BigNumber(5), DECIMALS);
-     // the amount the maker wants of taker asset
-     const takerAssetAmount = Web3Wrapper.toBaseUnitAmount(new BigNumber(0.1), DECIMALS);
-     // 0x v2 uses hex encoded asset data strings to encode all the information needed to identify an asset
-     const makerAssetData = assetDataUtils.encodeERC20AssetData(zrxTokenAddress);
-     const takerAssetData = assetDataUtils.encodeERC20AssetData(etherTokenAddress);
-     let txHash;
-     let txReceipt;
-
-      // Allow the 0x ERC20 Proxy to move ZRX on behalf of makerAccount
-    const makerZRXApprovalTxHash = await contractWrappers.erc20Token.setUnlimitedProxyAllowanceAsync(
-        zrxTokenAddress,
-        maker,
-    );
-
-    console.log("maker 0x approval:" + makerZRXApprovalTxHash);
-
-    // Allow the 0x ERC20 Proxy to move WETH on behalf of takerAccount
-    const takerWETHApprovalTxHash = await contractWrappers.erc20Token.setUnlimitedProxyAllowanceAsync(
-        etherTokenAddress,
-        taker,
-    );
-
-    console.log("taker WETH Approval:" + takerWETHApprovalTxHash);
-
-      // Set up the Order and fill it
-      const randomExpiration = getRandomFutureDateInSeconds();
-      const exchangeAddress = contractAddresses.exchange;
-  
-
-      // Create the order
-    const order = {
-        exchangeAddress,
-        makerAddress: maker,
-        takerAddress: NULL_ADDRESS,
-        senderAddress: NULL_ADDRESS,
-        feeRecipientAddress: NULL_ADDRESS,
-        expirationTimeSeconds: randomExpiration,
-        salt: generatePseudoRandomSalt(),
-        makerAssetAmount,
-        takerAssetAmount,
-        makerAssetData,
-        takerAssetData,
-        makerFee: ZERO,
-        takerFee: ZERO,
-    };
-
-
-    console.log("creating order...");
-    console.log(JSON.stringify(order));
-
-
-      // Generate the order hash and sign it
-      const orderHashHex = orderHashUtils.getOrderHashHex(order);
-      const signature = await signatureUtils.ecSignHashAsync(providerEngine, orderHashHex, maker);
-      const signedOrder = { ...order, signature };
-
-      // Validate the order is Fillable before calling fillOrder
-    // This checks both the maker and taker balances and allowances to ensure it is fillable
-    // up to takerAssetAmount
-    await contractWrappers.exchange.validateFillOrderThrowIfInvalidAsync(signedOrder, takerAssetAmount, taker);
-
-    // Fill the Order via 0x Exchange contract
-    txHash = await contractWrappers.exchange.fillOrderAsync(signedOrder, takerAssetAmount, taker, {
-        gasLimit: TX_DEFAULTS.gas,
-    });
-  
-    console.log("...order filled");
-  // Stop the Provider Engine
-    providerEngine.stop();
-
-
+    //async doBuy() {
+    doBuy = async () => {
+      console.log("doBuy()");
     }
 
  
-    
-    /*
-    <button
-          className={classes.button}
-          onClick={() => this.handleAlert(nos.getBalance({ asset: neo }))}
-        >
-        */
-    
- /*   makeBuy = async func => () => {
-        console.log("test Buy()");
-    }*/
+    getAllTokens = async () => {
+        console.log("getAllTokens()");
+        const response = await fetch('https://api.radarrelay.com/v2/tokens');
+        const myJson = await response.json(); 
+        console.log(`Downloaded ${myJson.length} tokens`);
+        console.log(`token[0]: ${JSON.stringify(myJson[0])}`);
+      }
 
-/*
-    testTrade = e => {
-        console.log('testTrade()');
-        this.testBuy;
-    }*/
+
+    toastTest = e => {
+        console.log("attempting toast");
+       /* const { toastManager } = this.props;
+        toastManager.add('Saved Successfully', { appearance: 'success' });*/
+    }
+
 
     render() {
+        const AccountWithNotifications = withToastManager(Account);
+        const ZeroExActionsWithNotifications = withToastManager(ZeroExActions);
+
+        if (!this.state || !this.state.contractWrappers || !this.state.web3Wrapper) {
+            return <div />;
+        }
+
     return (
         <div>
-            <button class="btn btn-secondary" onClick={this.doBuy}>
-            TestTrade</button>
+            <Content className="container">
+                    {this.state.web3 && (
+                        <div>
+                            <ToastProvider>
+                               
+                            <div>
+                                <button class="btn btn-secondary" onClick={this.doBuy}>
+                                TestTrade</button>
+                            </div>
+
+                            <div>
+                                <button class="btn btn-secondary" onClick={this.getAllTokens}>
+                                Get All Tokens</button>
+                            </div>
+
+                            <div>
+                                <button class="btn btn-secondary" onClick={this.toastTest}>
+                               Toast Test</button>
+                            </div>
+
+
+                            <ZeroExActionsWithNotifications
+                                    contractWrappers={this.state.contractWrappers}
+                                    web3Wrapper={this.state.web3Wrapper}
+                                />
+
+                            </ToastProvider>
+                        </div>
+                    )}
+                </Content>
+                <Footer/>
         </div>
     );
+  }
+
+
+  async initializeWeb3Async(){
+    let injectedProviderIfExists = (window).ethereum;
+    if (!_.isUndefined(injectedProviderIfExists)) {
+        if (!_.isUndefined(injectedProviderIfExists.enable)) {
+            try {
+                await injectedProviderIfExists.enable();
+            } catch (err) {
+                console.log(err);
+            }
+        }
+    } else {
+        const injectedWeb3IfExists = (window).web3;
+        if (!_.isUndefined(injectedWeb3IfExists) && !_.isUndefined(injectedWeb3IfExists.currentProvider)) {
+            injectedProviderIfExists = injectedWeb3IfExists.currentProvider;
+        } else {
+            return undefined;
+        }
+    }
+    if (injectedProviderIfExists) {
+        // Wrap Metamask in a compatibility wrapper as some of the behaviour
+        // differs
+        const networkId = await new Web3Wrapper(injectedProviderIfExists).getNetworkIdAsync();
+        const signerProvider =
+            injectedProviderIfExists.isMetaMask || injectedProviderIfExists.isToshi
+                ? new MetamaskSubprovider(injectedProviderIfExists)
+                : new SignerSubprovider(injectedProviderIfExists);
+        const provider = new Web3ProviderEngine();
+        provider.addProvider(signerProvider);
+        provider.addProvider(new RPCSubprovider(networkToRPCURI[networkId]));
+        provider.start();
+        const web3Wrapper = new Web3Wrapper(provider);
+        const contractWrappers = new ContractWrappers(provider, { networkId });
+        // Load all of the ABI's into the ABI decoder so logs are decoded
+        // and human readable
+        _.map(
+            [
+                contractWrappers.exchange.abi,
+                contractWrappers.erc20Token.abi,
+                contractWrappers.etherToken.abi,
+                contractWrappers.forwarder.abi,
+            ],
+            abi => web3Wrapper.abiDecoder.addABI(abi),
+        );
+        this.setState({ web3Wrapper, contractWrappers, web3: injectedProviderIfExists });
+    }
   }
 }
 
 export default Backend;
+
+
+/* Meta Mask Web3 Provider
+
+import { SignerSubprovider, RPCSubprovider, Web3ProviderEngine } from '@0x/subproviders';
+import { Web3Wrapper } from '@0x/web3-wrapper';
+
+// Create a Web3 Provider Engine
+const providerEngine = new Web3ProviderEngine();
+// Compose our Providers, order matters
+// Use the SignerSubprovider to wrap the browser extension wallet
+// All account based and signing requests will go through the SignerSubprovider
+providerEngine.addProvider(new SignerSubprovider(window.web3.currentProvider));
+// Use an RPC provider to route all other requests
+providerEngine.addProvider(new RPCSubprovider('http://localhost:8545'));
+providerEngine.start();
+
+(async () => {
+    // Get all of the accounts through the Web3Wrapper
+    const web3Wrapper = new Web3Wrapper(providerEngine);
+    const accounts = await web3Wrapper.getAvailableAddressesAsync();
+    console.log(accounts);
+})();
+
+*/
