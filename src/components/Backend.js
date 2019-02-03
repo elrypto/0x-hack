@@ -12,8 +12,9 @@ import { Account } from './Account';
 //import { InstallMetamask } from './components/install_metamask';
 //import { Nav } from './components/nav';
 //import { Welcome } from './components/welcome';
-import { ZeroExActions } from './zeroex_actions';
+import { ZeroExMultiBuyAction } from './zero_ex_multi_buy_action';
 import { networkToRPCURI } from './0x/utils';
+import { CreateAndExecuteOrder } from './0x/create_and_execute_order';
 
 
 
@@ -48,7 +49,7 @@ class Backend extends React.Component {
 
     render() {
         const AccountWithNotifications = withToastManager(Account);
-        const ZeroExActionsWithNotifications = withToastManager(ZeroExActions);
+        const ZeroExActionsWithNotifications = withToastManager(ZeroExMultiBuyAction);
 
         if (!this.state || !this.state.contractWrappers || !this.state.web3Wrapper) {
             return <div />;
