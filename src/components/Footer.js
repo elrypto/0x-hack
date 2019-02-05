@@ -12,8 +12,8 @@ class Footer extends Component {
           <div class="col-6 col-md">
           <h5>el_rypto</h5>
           <ul class="list-unstyled text-small">
-            <li><a class="text-muted" href="#">github</a></li>
-            <li><a class="text-muted" href="#">0x hack</a></li>
+            <li><a class="text-muted" href="https://github.com/lrypto/">github</a></li>
+            <li><a class="text-muted" href="https://github.com/lrypto/0x-hack">0x hack</a></li>
           </ul>
       </div>
         </div>

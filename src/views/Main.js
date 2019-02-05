@@ -23,11 +23,11 @@ class Main extends Component {
             <Card title="Top Daily Performer" 
                   growth="339"
                   line1="u:RaSpUtAn"
-                  line2="10 tokens"
+                  line2="4 tokens"
                   line3="created: Jan-7-2019"
                   buttontext="Follow"/>
 
-            <Card title="Top 30 Day Performer" 
+            <Card title="Top 30 Day" 
                   growth="296"
                   line1="morpheus"
                   line2="8 tokens"
@@ -40,7 +40,7 @@ class Main extends Component {
                   line2="3 tokens"
                   line3="created: Jan-21-2019"
                   buttontext="Follow"/>
-
+                  
           </div>
         <Footer/>
       </div> 
