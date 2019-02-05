@@ -8,6 +8,7 @@ import App from './App';
 import Main from './views/Main';
 import LeaderBoard from './views/Leaderboard';
 import Admin from './views/Admin';
+import Follow from './views/Follow';
 
 
 
@@ -17,6 +18,7 @@ const Router = Backbone.Router.extend({
     routes: {
       ''    : 'index',
       'leaderboard' : 'leaderboard',
+      'follow' : 'follow',
       'admin' : 'admin',
     },
     index: function() {
@@ -39,7 +41,14 @@ const Router = Backbone.Router.extend({
             <LeaderBoard />
           </App>
         , content)
-      }
+      },
+    follow: function() {
+        render(
+            <App id="follow">
+              <Follow />
+            </App>
+          , content)
+        }
   })
   
   let router = new Router()

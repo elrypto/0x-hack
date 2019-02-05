@@ -10,7 +10,7 @@ import { FillOrder } from './0x/fill_order';
 import { GetOrderInfo } from './0x/order_info';
 import { WrapEth } from './0x/wrap_eth';
 
-import { CreateAndExecuteOrder } from './0x/create_and_execute_order';
+import { CreateAndExecuteMultiple } from './0x/create_and_execute_multiple';
 
 
 const FormType = {
@@ -47,7 +47,7 @@ export class ZeroExMultiBuyAction extends React.Component {
         const { web3Wrapper, contractWrappers } = this.props;
         const defaultProps = { web3Wrapper, contractWrappers, onTxSubmitted: this.onTxSubmitted };
       
-        let currentFormRender = <CreateAndExecuteOrder {...defaultProps} />;
+        let currentFormRender = <CreateAndExecuteMultiple{...defaultProps} />;
       
         const panelTabsRender = _.map(Object.keys(FormType), formType => {
             const type = FormType[formType];

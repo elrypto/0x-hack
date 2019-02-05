@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 
 class Card extends Component {
+  
+  goFollow = e => {
+    window.location = '#/follow';
+  }
+  
+
   render() {
     return (
     
@@ -16,7 +22,7 @@ class Card extends Component {
             <li>{this.props.line3}</li>
             <li>{this.props.line4}</li>
           </ul>
-          <button type="button" class="btn btn-lg btn-block btn-outline-primary">{this.props.buttontext}</button>
+          <button type="button" onClick={this.goFollow} class="btn btn-lg btn-block btn-outline-primary">{this.props.buttontext}</button>
         </div>
       </div>
 
