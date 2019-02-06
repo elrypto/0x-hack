@@ -65,8 +65,9 @@ export class CreateAndExecuteMultiple extends React.Component{
                     token_name : "Augur Reputation Token",
                     alloc_perc : "30",
                     more_info : "https://www.augur.net/"
-                }
-            ]
+                },
+            ],
+            purchaseTotal: 0
         }
     }
 
@@ -167,14 +168,20 @@ export class CreateAndExecuteMultiple extends React.Component{
 //
         return(
             <div>
-                <button class="btn  btn-primary" onClick={this.createAndFillMultipleOrdersAsync}>
-                Purchase</button>
-                <button class="btn btn-secondary" onClick="">
+
+                <section class="jumbotron">
+                    <p>Note: your puchase amount will be split across the tokens in this portfolio according
+                        to the weight (allocation percentage) set by its creator.
+                    </p>
+                    <label class="form-group" for="input_to_buy">Purchase Amount:</label>
+                    <input class="form-group" id="input_to_buy" type="text"/>
+
+                    <button class="btn  btn-primary" onClick={this.createAndFillMultipleOrdersAsync}>
+                    Purchase</button>
+
+                    <button class="btn btn-secondary" onClick="">
                         Follow</button>
-
-        
-                <br/><br/>
-
+                </section>
 
                 <LittleCard portfolio={portfolio} />
             </div>  
