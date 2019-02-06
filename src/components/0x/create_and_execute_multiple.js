@@ -185,7 +185,7 @@ export class CreateAndExecuteMultiple extends React.Component{
 
                 <section class="jumbotron">
                     <p><small>Note: your puchase amount will be split across the tokens in this portfolio according
-                        to the weight (allocation percentage) set by its creator. You be required to sign and authorize purchases multiple times.
+                        to the weight (allocation percentage) set by its creator. You may be required to sign and authorize purchases multiple times.
                     </small></p>
                     <label class="form-group">Purchase Amount:</label>
                     <input class="form-group" id="input_to_buy" type="text" onChange={this.handlePurchaseChange} value={this.state.purchaseTotal}/>

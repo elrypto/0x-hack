@@ -131,6 +131,7 @@ export class Account extends React.Component {
         const fetchBalancesButton = (
             <Button
                 isSize="small"
+                class="btn btn-secondary"
                 isColor="info"
                 id="fetchAccountBalances"
                 onClick={this.fetchAccountDetailsAsync.bind(this)}
@@ -158,8 +159,6 @@ export class Account extends React.Component {
                         <td>{tokenIcon}</td>
                         <td>{symbol}</td>
                         <td>{balanceRender}</td>
-                        <td>{allowanceRender}</td>
-                        <td>{mintRender}</td>
                     </tr>
                 );
             });
@@ -171,8 +170,6 @@ export class Account extends React.Component {
                                 <th>Token</th>
                                 <th>Symbol</th>
                                 <th>Balance</th>
-                                <th>Allowance</th>
-                                <th>Mint</th>
                             </tr>
                         </thead>
                         <tbody>{balanceRows}</tbody>
@@ -183,21 +180,14 @@ export class Account extends React.Component {
 
         return (
             <Content style={{ marginTop: '15px' }}>
-                Below you will find the Account and token balances. The lock icon ({' '}
-                <Icon isSize="small" className="fa fa-lock" /> ) indicates that this token is not tradeable on 0x, to
-                unlock the token click the lock icon. The tick icon ({' '}
-                <Icon isSize="small" className="fa fa-check-circle" style={{ color: GREEN }} /> ) indicates that this
-                token is tradeable on 0x. Some tokens are mintable on the test networks (up to a certain amount) you can
-                mint tokens by clicking the mint ( <Icon isSize="small" className="fa fa-coins" /> ) symbol.
-                <Subtitle isSize={6}>
-                    <Tag>Account</Tag> {selectedAccount}
+                <Subtitle isSize={4}>
+                    <small><Tag>Account</Tag> {selectedAccount}</small>
                 </Subtitle>
                 <div className="level">
                     <div className="level-left">
                         <div className="level-item">{contentRender}</div>
                     </div>
                 </div>
-                {fetchBalancesButton}
             </Content>
         );
     }

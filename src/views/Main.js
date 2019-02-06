@@ -25,21 +25,21 @@ class Main extends Component {
                   line1="u:RaSpUtAn"
                   line2="4 tokens"
                   line3="created: Jan-7-2019"
-                  buttontext="Follow"/>
+                  buttontext="Follow or Purchase"/>
 
             <Card title="Top 30 Day" 
                   growth="296"
                   line1="morpheus"
                   line2="8 tokens"
                   line3="created: Jan-12-2019"
-                  buttontext="Follow"/>
+                  buttontext="Follow or Purchase"/>
 
             <Card title="Best Stability" 
                   growth="0.93"
                   line1="b.bernake"
                   line2="3 tokens"
                   line3="created: Jan-21-2019"
-                  buttontext="Follow"/>
+                  buttontext="Follow or Purchase"/>
                   
           </div>
         <Footer/>

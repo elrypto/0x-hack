@@ -4,14 +4,9 @@ import { Web3Wrapper } from '@0x/web3-wrapper';
 import { Content, Footer } from 'bloomer';
 import * as _ from 'lodash';
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 import { ToastProvider, withToastManager } from 'react-toast-notifications';
 
 import { Account } from './Account';
-//import { Faucet } from './components/faucet';
-//import { InstallMetamask } from './components/install_metamask';
-//import { Nav } from './components/nav';
-//import { Welcome } from './components/welcome';
 import { ZeroExMultiBuyAction } from './zero_ex_multi_buy_action';
 import { networkToRPCURI } from './0x/utils';
 
