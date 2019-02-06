@@ -11,6 +11,9 @@ export default class LittleCard extends React.Component {
   render() {
     //console.log(typeof this.props.online_now != 'undefined'))
 
+    /*  display: flex;
+        flex-direction: column-reverse;
+*/
 
     return(
     <React.Fragment>

@@ -3,6 +3,7 @@ import { Web3Wrapper } from '@0x/web3-wrapper';
 import { Column, Columns, Content, Panel, PanelTabs, Subtitle } from 'bloomer';
 import * as _ from 'lodash';
 import * as React from 'react';
+import LittleCard from './../components/LittleCard';
 
 import { CancelOrder } from './0x/cancel_order';
 import { CreateOrder } from './0x/create_order';
@@ -24,10 +25,15 @@ const FormType = {
 
 export class ZeroExMultiBuyAction extends React.Component {
 
+    constructor(props){
+        super(props);
+    }
+
   
     state = { selectedForm: FormType.CREATE };
     onTxSubmitted = async (txHash) => {
         const { toastManager, web3Wrapper } = this.props;
+        
         if (txHash) {
             toastManager.add(`Transaction Submitted: ${txHash}`, {
                 appearance: 'success',
@@ -43,7 +49,7 @@ export class ZeroExMultiBuyAction extends React.Component {
     }
     
     render(){
-        const { selectedForm } = this.state;
+        const { selectedForm, portfolio } = this.state;
         const { web3Wrapper, contractWrappers } = this.props;
         const defaultProps = { web3Wrapper, contractWrappers, onTxSubmitted: this.onTxSubmitted };
       
@@ -60,18 +66,10 @@ export class ZeroExMultiBuyAction extends React.Component {
             );
         });
         return (
-            <Content>
-                <Subtitle isSize={6}>Try 0x.js</Subtitle>
-                <p> Below are common examples of 0x.js actions you will come across when creating your dApp </p>
-                <Columns>
-                    <Column isSize={{ mobile: 11, default: 7 }}>
-                        <Panel>
-                            <PanelTabs>{panelTabsRender}</PanelTabs>
-                            {currentFormRender}
-                        </Panel>
-                    </Column>
-                </Columns>
-            </Content>
+
+            <div>
+                 {currentFormRender}
+            </div>
         );
     }
 }

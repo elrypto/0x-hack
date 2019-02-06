@@ -11,7 +11,7 @@ class Main extends Component {
         <Header />
 
           <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-            <h1 class="display-4">mirror</h1>
+            <h1 class="display-4">echo</h1>
             <p class="lead">Follow and match the moves of top performing crypto assset portfolios. 
                               The Portfolio creators are rewarded with crypto currency tokens based on performance and allowing others to follow their trades. 
                               Users can benefit by mirroring the trades of high performing market experts.</p>

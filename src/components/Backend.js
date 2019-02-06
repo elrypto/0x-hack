@@ -57,36 +57,29 @@ class Backend extends React.Component {
 
     return (
         <div>
-            <Content className="container">
+ 
                     {this.state.web3 && (
                         <div>
                             <ToastProvider>
                                
-                            <div>
-                                <button class="btn btn-secondary" onClick={this.doBuy}>
-                                TestTrade</button>
+                            <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+                                <p class="lead">Click <strong>follow</strong> to be notified of when RaSpUtAn makes trading moves with
+                                this portfolio and click <strong>purchase</strong> to mirror RaSpUtAn's most recent  portfolio allocation.
+                                You can match the next trade (or not), move this allocation to match another trader, or cash out to Eth at any time.
+                                Also, you can try the risk free simulation tool - everything is the same, except you are not using real tokens.
+                                </p>
+
+                                <ZeroExActionsWithNotifications
+                                        contractWrappers={this.state.contractWrappers}
+                                        web3Wrapper={this.state.web3Wrapper}
+                                    />
+
                             </div>
-
-                            <div>
-                                <button class="btn btn-secondary" onClick={this.getAllTokens}>
-                                Get All Tokens</button>
-                            </div>
-
-                            <div>
-                                <button class="btn btn-secondary" onClick={this.toastTest}>
-                               Toast Test</button>
-                            </div>
-
-
-                            <ZeroExActionsWithNotifications
-                                    contractWrappers={this.state.contractWrappers}
-                                    web3Wrapper={this.state.web3Wrapper}
-                                />
-
                             </ToastProvider>
+
                         </div>
                     )}
-                </Content>
+                
                 <Footer/>
         </div>
     );
@@ -142,28 +135,3 @@ class Backend extends React.Component {
 }
 
 export default Backend;
-
-
-/* Meta Mask Web3 Provider
-
-import { SignerSubprovider, RPCSubprovider, Web3ProviderEngine } from '@0x/subproviders';
-import { Web3Wrapper } from '@0x/web3-wrapper';
-
-// Create a Web3 Provider Engine
-const providerEngine = new Web3ProviderEngine();
-// Compose our Providers, order matters
-// Use the SignerSubprovider to wrap the browser extension wallet
-// All account based and signing requests will go through the SignerSubprovider
-providerEngine.addProvider(new SignerSubprovider(window.web3.currentProvider));
-// Use an RPC provider to route all other requests
-providerEngine.addProvider(new RPCSubprovider('http://localhost:8545'));
-providerEngine.start();
-
-(async () => {
-    // Get all of the accounts through the Web3Wrapper
-    const web3Wrapper = new Web3Wrapper(providerEngine);
-    const accounts = await web3Wrapper.getAvailableAddressesAsync();
-    console.log(accounts);
-})();
-
-*/

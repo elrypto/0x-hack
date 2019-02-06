@@ -10,14 +10,14 @@ import {
 } from '0x.js';
 
 import { Web3Wrapper } from '@0x/web3-wrapper';
-import { Button, Control, Field, Input, PanelBlock, Select, TextArea } from 'bloomer';
 import * as _ from 'lodash';
 import * as React from 'react';
 
 import { TOKENS, TOKENS_BY_NETWORK } from './tokens';
 import { NULL_ADDRESS, ZERO, parseJSONSignedOrder } from './utils';
 import { OpenModule } from './open_module';
-import { PanelBlockField } from './panel_block_field';
+
+import LittleCard from "../LittleCard";
 
 
 const TraderSide = {
@@ -29,12 +29,45 @@ export class CreateAndExecuteMultiple extends React.Component{
 
     constructor(props) {
         super(props);
-        this.state = {
-            makerTokenSymbol: TOKENS.ZRX.symbol,
-            takerTokenSymbol: TOKENS.WETH.symbol,
-            makerAmount: '1',
-            takerAmount: '1',
-        };
+        /* TODO:
+                1. portfolio would be pulled from remote distributed storage (e.g. IPFS) linked to 
+                the user (i.e. RaSpUtAn)
+                2. token definitons pulled from a remote source 
+                3. Attempt to switch to MultiAssetProxy to have only one signing step
+            */
+
+           this.state = {      
+            portfolio : [
+                {
+                    token_icon : "https://0xproject.com/images/token_icons/ZRX.png",
+                    token_symbol : "ZRX",
+                    token_name : "0x Protocol Token",
+                    alloc_perc : "40",
+                    more_info : "http://0x.org"
+                },
+                {
+                    token_icon : "https://0xproject.com/images/token_icons/MKR.png",
+                    token_symbol : "MKR",
+                    token_name : "Maker DAO",
+                    alloc_perc : "15",
+                    more_info : "https://makerdao.com"
+                },
+                {
+                    token_icon : "https://0xproject.com/images/token_icons/GNT.png",
+                    token_symbol : "GNT",
+                    token_name : "Golem Network Token",
+                    alloc_perc : "15",
+                    more_info : "https://golem.network/"
+                },
+                {
+                    token_icon : "https://0xproject.com/images/token_icons/REP.png",
+                    token_symbol : "REP",
+                    token_name : "Augur Reputation Token",
+                    alloc_perc : "30",
+                    more_info : "https://www.augur.net/"
+                }
+            ]
+        }
     }
 
     fillOrderAsync = async (signedOrder) => {
@@ -52,7 +85,12 @@ export class CreateAndExecuteMultiple extends React.Component{
 
     createAndFillMultipleOrdersAsync = async()  => {
         console.log("CREATEANDFILL MULTIPLE");
-        const { makerTokenSymbol, makerAmount, takerTokenSymbol, takerAmount } = this.state;
+        //const { makerTokenSymbol, makerAmount, takerTokenSymbol, takerAmount } = this.state;
+        
+        const makerTokenSymbol = TOKENS.ZRX.symbol;
+        const takerTokenSymbol = TOKENS.WETH.symbol;
+        const makerAmount = '1';
+        const takerAmount = '1';
         await this.createAndFillOrderAsync(makerTokenSymbol, makerAmount, takerTokenSymbol, takerAmount);
         const makerTokenSymbol2 = TOKENS.REP.symbol;
         await this.createAndFillOrderAsync(makerTokenSymbol2, makerAmount, takerTokenSymbol, takerAmount);
@@ -125,118 +163,25 @@ export class CreateAndExecuteMultiple extends React.Component{
     }
 
     render(){
-        const signedOrderRender = this.state.signedOrder ? (
+        const {portfolio} = this.state;
+//
+        return(
             <div>
-                <PanelBlockField label="Order Hash">
-                    <Input value={this.state.orderHash} readOnly={true} />
-                </PanelBlockField>
-                <PanelBlockField label="Signed Order">
-                    <TextArea value={JSON.stringify(this.state.signedOrder, null, 2)} type="text" readOnly={true} />
-                </PanelBlockField>
-            </div>
-        ) : (
-            <div />
-        );
+                <button class="btn  btn-primary" onClick={this.createAndFillMultipleOrdersAsync}>
+                Purchase</button>
+                <button class="btn btn-secondary" onClick="">
+                        Follow</button>
 
-        const makerTokenRender = (
-            <PanelBlockField label="Maker Token">
-                <Field hasAddons={true}>
-                    <Control>{this.buildTokenSelector(TraderSide.MAKER)}</Control>
-                    <Input
-                        onChange={(e) => this.orderTokenAmountChanged(e.target.value, TraderSide.MAKER)}
-                        value={this.state.makerAmount}
-                        type="text"
-                        placeholder="Amount"
-                    />
-                </Field>
-            </PanelBlockField>
-        );
-
-        const makerTokenRender2 = (
-            <PanelBlockField label="Maker Token2">
-                <Field hasAddons={true}>
-                    <Control>{this.buildTokenSelector(TraderSide.MAKER2)}</Control>
-                    <Input
-                        onChange={(e) => this.orderTokenAmountChanged2(e.target.value, TraderSide.MAKER2)}
-                        value={this.state.makerAmount2}
-                        type="text"
-                        placeholder="Amount"
-                    />
-                </Field>
-            </PanelBlockField>
-        );
+        
+                <br/><br/>
 
 
-        const takerTokenRender = (
-            <PanelBlockField label="Taker Token">
-                <Field hasAddons={true}>
-                    <Control>{this.buildTokenSelector(TraderSide.TAKER)}</Control>
-                    <Control isExpanded={true}>
-                        <Input
-                            onChange={(e) => this.orderTokenAmountChanged(e.target.value, TraderSide.TAKER)}
-                            value={this.state.takerAmount}
-                            type="text"
-                            placeholder="Amount"
-                        />
-                    </Control>
-                </Field>
-            </PanelBlockField>
-        );
-
-        const errorMessageRender = this.state.errorMessage ? <div>{this.state.errorMessage}</div> : <div />;
-        return (
-            <div>
-                <PanelBlock>
-                    <div>
-                       
-                     Multi      <OpenModule filePath="/src/components/zeroex_actions/create_order.tsx" lineNumber={51} />
-                    </div>
-                </PanelBlock>
-                {makerTokenRender}
-                {makerTokenRender2}
-                {takerTokenRender}
-                {errorMessageRender}
-                {signedOrderRender}
-                <PanelBlock>
-                    <Button onClick={this.createAndFillMultipleOrdersAsync} isFullWidth={true} isSize="small" isColor="primary">
-                        Purchase
-                    </Button>
-                </PanelBlock>
-            </div>
+                <LittleCard portfolio={portfolio} />
+            </div>  
         );
     }
 
-    orderTokenSelected = (symbol, traderSide) => {
-        this.setState(prevState => {
-            return traderSide === TraderSide.MAKER
-                ? { ...prevState, makerTokenSymbol: symbol }
-                : { ...prevState, takerTokenSymbol: symbol };
-        });
-    }
-
-    orderTokenAmountChanged = (amount, traderSide) => {
-        this.setState(prevState => {
-            return traderSide === TraderSide.MAKER
-                ? { ...prevState, makerAmount: amount }
-                : { ...prevState, takerAmount: amount };
-        });
-    }
-
-    buildTokenSelector = (traderSide) => {
-        const selected = traderSide === TraderSide.MAKER ? this.state.makerTokenSymbol : this.state.takerTokenSymbol;
-        return (
-            <Select onChange={(e) => this.orderTokenSelected(e.target.value, traderSide)} value={selected}>
-                {_.map(Object.keys(TOKENS), tokenSymbol => {
-                    return (
-                        <option key={`${tokenSymbol}-${traderSide}`} value={tokenSymbol}>
-                            {tokenSymbol}
-                        </option>
-                    );
-                })}
-            </Select>
-        );
-    }
-
+    
     fillOrderClick = async () => {
         const signedOrderJSON = this.state.signedOrder;
         if (signedOrderJSON) {
