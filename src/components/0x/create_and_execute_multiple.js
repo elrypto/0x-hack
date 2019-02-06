@@ -71,6 +71,12 @@ export class CreateAndExecuteMultiple extends React.Component{
         }
     }
 
+
+    handlePurchaseChange = e => {
+        this.setState({purchaseTotal:e.target.value});
+    }
+
+
     fillOrderAsync = async (signedOrder) => {
         const { web3Wrapper, contractWrappers } = this.props;
         // Query all available addresses
@@ -86,15 +92,23 @@ export class CreateAndExecuteMultiple extends React.Component{
 
     createAndFillMultipleOrdersAsync = async()  => {
         console.log("CREATEANDFILL MULTIPLE");
-        //const { makerTokenSymbol, makerAmount, takerTokenSymbol, takerAmount } = this.state;
-        
-        const makerTokenSymbol = TOKENS.ZRX.symbol;
+      
+        const {portfolio, purchaseTotal} = this.state;
+        let makerAmount = '0';
+        let makerTokenSymbol = '';
         const takerTokenSymbol = TOKENS.WETH.symbol;
-        const makerAmount = '1';
         const takerAmount = '1';
-        await this.createAndFillOrderAsync(makerTokenSymbol, makerAmount, takerTokenSymbol, takerAmount);
-        const makerTokenSymbol2 = TOKENS.REP.symbol;
-        await this.createAndFillOrderAsync(makerTokenSymbol2, makerAmount, takerTokenSymbol, takerAmount);
+        
+        for (var i=0; i < portfolio.length; i++){
+            // alloc_perc, turn it into a decimal e.g. 30%, becomes .3 
+            makerAmount = purchaseTotal * ((portfolio[i].alloc_perc)/100);
+            makerTokenSymbol = portfolio[i].token_symbol;
+            console.log(`executing transaction for token #:${i+1} symbol:${makerTokenSymbol} for amount:${makerAmount}`);
+            await this.createAndFillOrderAsync(makerTokenSymbol, makerAmount, takerTokenSymbol, takerAmount);
+        }
+
+        //go to my portfolios
+        window.location = "/#/my_portfolio";
     }
 
     createAndFillOrderAsync = async(makerTokenSymbol, makerAmount, takerTokenSymbol, takerAmount)  => {
@@ -170,11 +184,11 @@ export class CreateAndExecuteMultiple extends React.Component{
             <div>
 
                 <section class="jumbotron">
-                    <p>Note: your puchase amount will be split across the tokens in this portfolio according
-                        to the weight (allocation percentage) set by its creator.
-                    </p>
-                    <label class="form-group" for="input_to_buy">Purchase Amount:</label>
-                    <input class="form-group" id="input_to_buy" type="text"/>
+                    <p><small>Note: your puchase amount will be split across the tokens in this portfolio according
+                        to the weight (allocation percentage) set by its creator. You be required to sign and authorize purchases multiple times.
+                    </small></p>
+                    <label class="form-group">Purchase Amount:</label>
+                    <input class="form-group" id="input_to_buy" type="text" onChange={this.handlePurchaseChange} value={this.state.purchaseTotal}/>
 
                     <button class="btn  btn-primary" onClick={this.createAndFillMultipleOrdersAsync}>
                     Purchase</button>

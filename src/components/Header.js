@@ -20,7 +20,7 @@ class Header extends Component {
                     <nav class="my-2 my-md-0 mr-md-3">
                         <a class="p-2 text-dark" href="#/leaderboard">Leaderboard</a>
                         <a class="p-2 text-dark" href="#">How it Works</a>
-                        <a class="p-2 text-dark" href="#">Support</a>
+                        <a class="p-2 text-dark" href="#/my_portfolio">My Portfolios</a>
                     </nav>
                     
                     <a class="btn btn-outline-primary" href="#">Get Started</a>

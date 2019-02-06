@@ -9,6 +9,7 @@ import Main from './views/Main';
 import LeaderBoard from './views/Leaderboard';
 import Admin from './views/Admin';
 import Follow from './views/Follow';
+import MyPortfolio from './views/MyPortfolio';
 
 
 
@@ -20,6 +21,7 @@ const Router = Backbone.Router.extend({
       'leaderboard' : 'leaderboard',
       'follow' : 'follow',
       'admin' : 'admin',
+      'my_portfolio' : 'my_portfolio',
     },
     index: function() {
       render(
@@ -42,7 +44,14 @@ const Router = Backbone.Router.extend({
           </App>
         , content)
       },
-    follow: function() {
+      my_portfolio: function() {
+        render(
+            <App id="my_portfolio">
+              <MyPortfolio />
+            </App>
+          , content)
+        },
+      follow: function() {
         render(
             <App id="follow">
               <Follow />
