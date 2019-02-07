@@ -8,7 +8,11 @@ For the 0x-hack, the core scenario is working and can be walked through step by 
 
 0x-hack Demo "echo" can be run from https://powerful-plateau-28520.herokuapp.com/ (Febuary 2019)
 
-0. Ensure that your Ethereum address (!!!link) and Meta mask is setup (!!!link). This demo has only been tested on Kovan (!!!link). You will need to have tokens unlocked for Ox, see the sandbox (!!!link).
+0a. Ensure that your Ethereum address (!!!link) 
+0b. and Meta mask is setup (!!!link). 
+0c. This demo has only been tested on Kovan (!!!link). 
+0d. You will need to have tokens unlocked for Ox, see the sandbox (!!!link).
+0e. Suggest you use Chrome browser (!!!link)
 1. Go to the main page
 2. Click follow for the first card (name)
 3. On the follow page, click purchase 

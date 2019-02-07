@@ -18,8 +18,8 @@ class Header extends Component {
                 <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
                     <h5 class="my-0 mr-md-auto font-weight-normal"><a class="p-2 text-dark" href="/">echo</a></h5>
                     <nav class="my-2 my-md-0 mr-md-3">
+                        <a class="p-2 text-dark" href="https://github.com/lrypto/0x-hack">Demo Instructions</a>
                         <a class="p-2 text-dark" href="#/leaderboard">Leaderboard</a>
-                        <a class="p-2 text-dark" href="#">How it Works</a>
                         <a class="p-2 text-dark" href="#/my_portfolio">My Portfolios</a>
                     </nav>
                     
