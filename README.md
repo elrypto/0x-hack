@@ -26,14 +26,14 @@ For the 0x-hack, the core scenario is working and can be walked through step by 
 <img src="./images/echo_screenshot.JPG" width="250px" />
 
 2. Click follow for the first card (name)
-<img src="./images/echo_screenshot_follow.JPG" width="250px" />
+<img src="./images/echo_screenshot_follow.JPG" width="300px" />
 
 3. That takes you to the follow page and purchase page
 4. Enter a purchase value, example 10
-<img src="./images/echo_screenshot_purchase.JPG" width="250px" />
+<img src="./images/echo_screenshot_purchase.JPG" width="300px" />
 
 5. Click purchase, once complete you will be taken to you account/portfolio page.
-<img src="./images/echo_screenshot_account.JPG" width="250px" />
+<img src="./images/echo_screenshot_account.JPG" width="300px" />
 
 ## Demo - Troubleshooting
 Make sure you have done all the steps in "Demo - Setup" and that you have a token balance on Kovan.
