@@ -3,7 +3,7 @@ echo was the submission to the Feb 2019 [0x-hackathon](https://blog.0xproject.co
 
 
 <p align="center">
-  <img src="./public/echo_screenshot.JPG" width="450px" />
+  <img src="./images/echo_screenshot.JPG" width="450px" />
 </p>
 
 
@@ -13,19 +13,24 @@ For the 0x-hack, the core scenario is working and can be walked through step by 
 
 0x-hack Demo "echo" can be run from [heroku](https://powerful-plateau-28520.herokuapp.com/) (Febuary 2019)
 
-0a. Ensure that you have an (Ethereum address)[https://www.myetherwallet.com/]
-0b. Suggest you use (Chrome browser)[https://www.google.com/chrome/] with Meta mask[https://metamask.io/] setup. 
+0a. Ensure that you have an [Ethereum address](https://www.myetherwallet.com/)
+0b. Suggest you use [Chrome browser](https://www.google.com/chrome/) with [Meta mask](https://metamask.io/) setup. 
 0c. This demo has only been tested on [Kovan Testnet](https://kovan-testnet.github.io/website/). 
-0d. You will need to have tokens unlocked for Ox, see the [code sandbox] (https://codesandbox.io/s/github/0xproject/0x-codesandbox).
+0d. You will need to have tokens unlocked for Ox, see the [code sandbox](https://codesandbox.io/s/github/0xproject/0x-codesandbox).
 0e. You will need to have a token balance, there is a [faucet here](https://faucet.kovan.network/).
 
 
 ## Demo - Scenario
 
-1. Go to the main page
+1. Go to the main page [heroku](https://powerful-plateau-28520.herokuapp.com/)
 2. Click follow for the first card (name)
+
 3. That takes you to the follow page and purchase page
-4. Add a value to
+
+4. Enter a purchase value, example 10
+
+5. Click purchase, once complete you will be taken to you account/portfolio page.
+
 
 ## Demo - Troubleshooting
 Make sure you have done all the steps in "Demo - Setup" and that you have a token balance on Kovan.
