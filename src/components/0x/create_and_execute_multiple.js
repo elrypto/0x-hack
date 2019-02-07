@@ -190,7 +190,7 @@ export class CreateAndExecuteMultiple extends React.Component{
                     <label class="form-group">Purchase Amount:</label>
                     <input class="form-group" id="input_to_buy" type="text" onChange={this.handlePurchaseChange} value={this.state.purchaseTotal}/>
 
-                    <button class="btn  btn-primary" onClick={this.createAndFillMultipleOrdersAsync}>
+                    <button class="btn  btn-primary form-group" onClick={this.createAndFillMultipleOrdersAsync}>
                     Purchase</button>
 
                     <button class="btn btn-secondary" onClick="">

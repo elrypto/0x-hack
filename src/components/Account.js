@@ -163,7 +163,9 @@ export class Account extends React.Component {
                 );
             });
             contentRender = (
-                <div className="level level-left">
+                   <div className="level level-left">
+                       <p><small>Note: If you just purchased a portfolio of tokens, it may some take some time for your updated balances to show up.</small></p>
+                
                     <Table isNarrow={true}>
                         <thead>
                             <tr>
