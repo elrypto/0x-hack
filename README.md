@@ -1,5 +1,5 @@
 ## echo, a 0x-hack
-echo was the submission to the Feb 2019 [0x-hackathon](https://blog.0xproject.com/0x-coinlist-hackathon-3b48ddbfd21c). echo allows the user to follow and mirror trades of top performing portfolios (collections of tokens with weighted allocations).
+echo was a submission to the Feb 2019 [0x-hackathon](https://blog.0xproject.com/0x-coinlist-hackathon-3b48ddbfd21c). echo allows the user to follow and mirror trades of top performing portfolios (collections of tokens with weighted allocations).
 
 
 <p align="center">
